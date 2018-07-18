@@ -15,7 +15,7 @@ Project for Database Systems I at Simon Fraser University
 
 
 3. Download mysqlclient 1.3.12 database connector in order to use django with mysql.
-  - pip install mysqlclient
+    - pip install mysqlclient
 
 
 This is all that is required to use django with mysql.
