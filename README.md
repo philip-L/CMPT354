@@ -11,8 +11,8 @@ Project for Database Systems I at Simon Fraser University
 
 2. MySQL version 5.7.22 is required (not latest) since mysqlclient only supports up to this. Reference: https://dev.mysql.com/doc/refman/5.7/en/
     
-        download the native package
-        make sure to use legacy encryption if asked
+        - download the native package
+        - make sure to use legacy encryption if asked
 
 
 3. Download mysqlclient 1.3.12 database connector in order to use django with mysql:
