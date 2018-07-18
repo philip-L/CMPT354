@@ -27,6 +27,7 @@ This is all that is required to use django with mysql.
 After downloading the native package follow the install wizard to set things up. Refer to reference manual to create database.
 
 To start and stop the MySQL server:
+
     - To start the server:  mysqld_safe --user=mysql &
     - To stop the server:  mysqladmin -u root shutdown
   
