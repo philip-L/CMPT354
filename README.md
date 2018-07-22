@@ -1,7 +1,19 @@
 # CMPT354
 Project for Database Systems I at Simon Fraser University
 
-## Dependencies
+## Front end
+
+cd CMPT354/react-dynamicform
+
+0. npm add yarn
+
+1. yarn
+
+2. npm start
+
+## Backend
+
+### Dependencies
 
 0. If you don't have Python, get it.
 
@@ -19,12 +31,16 @@ Project for Database Systems I at Simon Fraser University
     
         pip install mysqlclient
 
+4. Also need sqlparse in order to run raw sql queries in migrations
+        
+        pip install sqlparse
+
 
 This is all that is required to use django with mysql.
 
 
 
-## Setting up the database (PLEASE REFER TO DOCUMENTATION)
+### Creating the database (PLEASE REFER TO DOCUMENTATION) https://dev.mysql.com/doc/refman/5.7/en/
 
 After downloading the native package follow the install wizard to set things up. Refer to reference manual to create database.
 
@@ -34,23 +50,26 @@ To start and stop the MySQL server:
     To stop the server:  mysqladmin -u root shutdown
   
   
-When the MySQL server is running you can run: "mysql -u root -p" to use the MySQL shell. If you didn't set up a password no password is required.
+When the MySQL server is running you can run: 
 
-Create database: 
+    mysql -u root -p
     
-    CREATE DATABASE SubAve;
+You might need to create a password (use "SubAvepwd" as password)
 
-To see list of databases: 
+Useful commands: 
     
+    CREATE DATABASE SubAve; 
     SHOW databases;
-
-To switch to a database (where you can show & create tables): 
-
     USE 'database_name';
-
-To show tables: 
-
     SHOW tables;
 
+### Creating tables and populating the database
 
+This is done through django. It is accomplished through migrations (https://docs.djangoproject.com/en/2.0/intro/tutorial02/):
+
+Useful commands:
+        
+        python manage.py migrate
+        python manage.py makemigrations ordering
+        python manage.py sqlmigrate ordering 0001
 
