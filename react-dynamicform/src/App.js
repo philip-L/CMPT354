@@ -108,6 +108,33 @@ class App extends Component {
           onSubmit = {(model) => {this.onSubmit(model)}}
         />
 
+      <div align="left">
+        <div>
+          Projection query: Find ____ from table _____
+        </div>
+        <div>
+          Selection query: Find ____ from table _____ where ____ > ____
+        </div>
+        <div>
+          Join query: Find _____ where _____ = _____
+        </div>
+        <div>
+          Aggregation query: Find average price of sandwiches
+        </div>
+        <div>
+          Nested Aggregation query:
+        </div>
+        <div>
+          Update query: Click update icon in table
+        </div>
+        <div>
+          Delete query: Click delete icon in table
+        </div>
+        <div>
+          Division query: Click to find people who bought all sandwiches
+        </div>
+      </div>
+
         <table border="1">
           <tbody>{data}</tbody>
         </table>
