@@ -3,14 +3,14 @@ from django.db import models
 # Create your models here.
 class Restaurant(models.Model):
     Restaurant = models.CharField(max_length=4, primary_key=True)
-    Address  = models.CharField(max_length=20)
+    Address  = models.CharField(max_length=255)
     class Meta:
         db_table = 'Restaurant'
 
 class Employee(models.Model):
     Employee = models.CharField(max_length=4, primary_key=True)
-    EmployeeName = models.CharField(max_length=20)
-    EmployeePosition = models.CharField(max_length=30)
+    EmployeeName = models.CharField(max_length=255)
+    EmployeePosition = models.CharField(max_length=255)
     class Meta:
         db_table = 'Employee'
 
@@ -23,10 +23,10 @@ class WorksAt(models.Model):
 
 class Customer(models.Model):
     Customer = models.CharField(max_length=4, primary_key=True)
-    Name  = models.CharField(max_length=20)
-    Email  = models.CharField(max_length=20)
+    Name  = models.CharField(max_length=255)
+    Email  = models.CharField(max_length=255)
     CardNumber  = models.IntegerField()
-    Address  = models.CharField(max_length=20)
+    Address  = models.CharField(max_length=255)
     Password = models.CharField(max_length=20)
     class Meta:
         db_table = 'Customer'
@@ -40,7 +40,7 @@ class Orders(models.Model):
     Restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     Customer  = models.ForeignKey(Customer, on_delete=models.CASCADE)
     DeliverySuccess = models.BooleanField(default=False)
-    DeliveryInstructions = models.CharField(max_length=30)
+    DeliveryInstructions = models.CharField(max_length=255)
     OrderPlacementTime = models.DateTimeField()
     OrderCompletionTime = models.DateTimeField()
     DeliveryOrPickup = models.CharField(max_length=1, choices=delivery_or_pickup)
@@ -50,8 +50,8 @@ class Orders(models.Model):
 
 class MenuItem(models.Model):
     MenuItem = models.CharField(max_length=4, primary_key=True)
-    Description  = models.CharField(max_length=30)
-    Price  = models.FloatField(max_length=20)
+    ItemName  = models.CharField(max_length=255)
+    Price  = models.FloatField()
     class Meta:
         db_table = 'MenuItem'
 
@@ -71,7 +71,7 @@ class Sandwich(models.Model):
         ('F', 'Foot-long'),
     )
     MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    SandwichName = models.CharField(max_length=20)
+    SandwichName = models.CharField(max_length=255)
     SandwichSize = models.CharField(max_length=1, choices=sizes)
     class Meta:
         db_table = 'Sandwich'
@@ -84,7 +84,7 @@ class Drinks(models.Model):
         ('L', 'Large'),
     )
     MenuItem = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
-    DrinkName = models.CharField(max_length=20)
+    DrinkName = models.CharField(max_length=255)
     DrinkSize = models.CharField(max_length=1, choices=sizes)
     class Meta:
         db_table = 'Drinks'
@@ -92,14 +92,14 @@ class Drinks(models.Model):
 
 class Snacks(models.Model):
     MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    SnackName = models.IntegerField()
+    SnackName = models.CharField(max_length=255)
     class Meta:
         db_table = 'Snacks'
 
 
 class Ingredients(models.Model):
     Ingredient = models.CharField(max_length=4, primary_key=True)
-    IngredientName = models.CharField(max_length=20)
+    IngredientName = models.CharField(max_length=255)
     class Meta:
         db_table = 'Ingredients'
 
