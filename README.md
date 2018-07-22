@@ -1,6 +1,16 @@
 # CMPT354
 Project for Database Systems I at Simon Fraser University
 
+## Front end
+
+cd CMPT354/react-dynamicform
+
+0. npm add yarn
+
+1. yarn
+
+2. npm start
+
 ## Dependencies
 
 0. If you don't have Python, get it.
