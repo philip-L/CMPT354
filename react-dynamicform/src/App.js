@@ -15,19 +15,27 @@ class App extends Component {
   onSubmit = (model) => {
     let data = [];
 
-    if (model.id) {
+    let newMod = JSON.parse(JSON.stringify(model))
+
+    if (newMod.id) {
       data = this.state.data.filter((d) => {
-        return d.id != model.id
+        return d.id != newMod.id
       });
     } else {
-      model.id = Math.random().toString(36).substr(2, 4);
+      newMod.id = Math.random().toString(36).substr(2, 4);
       data = this.state.data.slice();
     }
     this.setState({
-      data: [model, ...data],
+      data: [newMod, ...data],
     });
 
-    model = {}
+    model.name = ''
+    model.id = ''
+    model.creditcard = ''
+    model.address = ''
+    model.sandwich = ''
+    model.snack = ''
+    model.drink = ''
 
 
   }
