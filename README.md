@@ -13,6 +13,8 @@ cd CMPT354/react-dynamicform
 
 ## Backend
 
+These are the steps I took on a MacOS environment.
+
 ### Dependencies
 
 0. If you don't have Python, get it.
@@ -40,23 +42,26 @@ This is all that is required to use django with mysql.
 
 
 
-### Creating the database (PLEASE REFER TO DOCUMENTATION) https://dev.mysql.com/doc/refman/5.7/en/
+### Creating the database (documentation: https://dev.mysql.com/doc/refman/5.7/en/)
 
 After downloading the native package follow the install wizard to set things up. Refer to reference manual to create database.
 
-To start and stop the MySQL server:
+You need to create a MySQL database with the following settings to match the django settings file:
+       
+       database name: SubAve
+       user: root
+       password: SubAvepwd
+
+Useful commands:
 
     To start the server:  mysqld_safe --user=mysql &
     To stop the server:  mysqladmin -u root shutdown
   
-  
-When the MySQL server is running you can run: 
+When the MySQL server is running you run: 
 
     mysql -u root -p
-    
-You might need to create a password (use "SubAvepwd" as password)
 
-Useful commands: 
+When using the database shell: 
     
     CREATE DATABASE SubAve; 
     SHOW databases;
@@ -67,9 +72,9 @@ Useful commands:
 
 This is done through django. It is accomplished through migrations (https://docs.djangoproject.com/en/2.0/intro/tutorial02/):
 
-Useful commands:
+Use these commands:
         
-        python manage.py migrate
-        python manage.py makemigrations ordering
-        python manage.py sqlmigrate ordering 0001
+        To apply migrations: python manage.py migrate
+        To create a migration for the ordering app: python manage.py makemigrations ordering
+        To view the sql before applying a migration 0001 on ordering app: python manage.py sqlmigrate ordering 0001
 
