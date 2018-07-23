@@ -23,7 +23,7 @@ These are the steps I took on a MacOS environment.
     
         pip install django
 
-2. MySQL version 5.7.22 is required (not latest) since mysqlclient only supports up to this. Reference: https://dev.mysql.com/doc/refman/5.7/en/
+2. MySQL version 5.7.22 is required (not latest) since mysqlclient only supports up to this. Download page: https://dev.mysql.com/downloads/mysql/5.7.html#downloads Reference: https://dev.mysql.com/doc/refman/5.7/en/
     
         - download the native package
         - make sure to use legacy encryption if asked
