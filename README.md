@@ -65,7 +65,7 @@ When using the database shell:
     
     CREATE DATABASE SubAve; 
     SHOW databases;
-    USE 'database_name';
+    USE SubAve;
     SHOW tables;
 
 ### Creating tables and populating the database
