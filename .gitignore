@@ -1,3 +1,4 @@
 # pycache directories
 SubAvenue/SubAvenue/__pycache__/
 SubAvenue/ordering/__pycache__/
+SubAvenue/ordering/migrations/__pycache__/
