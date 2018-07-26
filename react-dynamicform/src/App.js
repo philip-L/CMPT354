@@ -42,6 +42,9 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'drinks', query: 'projection'}).then(function (response) {
         console.log(response);
+        ReactDOM.render( <JsonTable className="table" rows = {response.data} / > ,
+          document.getElementById('container')
+        );
       })
   }
 
