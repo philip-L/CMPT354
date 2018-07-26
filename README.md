@@ -77,6 +77,6 @@ This is done through django. It is accomplished through migrations (https://docs
 Use these commands:
         
         To apply the migrations to populate database: python manage.py migrate
-        To create a new migration for the ordering app: python manage.py makemigrations ordering
-        To view the sql before applying a migration number 0001 on ordering app: python manage.py sqlmigrate ordering 0001
+        To create a new migration: python manage.py makemigrations ordering
+        To view the sql before applying a migration: python manage.py sqlmigrate ordering 0001
 
