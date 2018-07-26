@@ -19,10 +19,69 @@ class App extends Component {
         console.log(response);
       })
   }
-
+  
   testeroni(){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     send: 'Hi dude bro this is an awesome test'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+   projectionQuery(drinks){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'drinks', query: 'projection'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+   selectionQuery(price){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'price', query: 'selection'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+   joinQuery(restaurant){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'restaurant', query: 'join'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+   aggregationQuery(date){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'date', query: 'aggregation'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+  
+   groupbyQuery(cost){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'cost', query: 'nested_aggregation'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+  
+   updateOp(price){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'price', query:'update'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+  
+   deleteOp(menuItemID){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'menuItemID', query: 'delete'}).then(function (response) {
+        console.log(response);
+      })
+  }
+  
+   divisionQuery(restaurantID){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    attr: 'restaurantID', query: 'division'}).then(function (response) {
         console.log(response);
       })
   }
