@@ -32,12 +32,6 @@ class App extends Component {
       })
   }
 
-  // testeroni(){
-  //       ReactDOM.render( <JsonTable className="table" rows = {} / > ,
-  //         document.getElementById('container')
-  //       );
-  // }
-
    projectionQuery(drinks){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'drinks', query: 'projection'}).then(function (response) {
