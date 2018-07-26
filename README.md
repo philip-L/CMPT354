@@ -21,9 +21,9 @@ These are the steps I took on a MacOS environment.
 
 0. If you don't have Python, get it.
 
-1. Make sure you have Django installed (version 2.0.5 or later). Reference: https://docs.djangoproject.com/en/2.0/intro/tutorial01/
+1. Make sure you have Django installed (version 2.0.5 or later). Include the djangorestframework, and django-cors-headers. Reference: https://docs.djangoproject.com/en/2.0/intro/tutorial01/
     
-        pip install django
+        pip install django djangorestframework django-cors-headers
 
 2. MySQL version 5.7.22 is required (not latest) since mysqlclient only supports up to this. Download page: https://dev.mysql.com/downloads/mysql/5.7.html#downloads Reference: https://dev.mysql.com/doc/refman/5.7/en/
     
