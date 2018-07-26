@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import DynamicForm from './components/DynamicForm';
 import axios from 'axios';
 import './App.css';
-// import JsonTable from 'react-json-table';
+const JsonTable = require('ts-react-json-table');
 
 class App extends Component {
   state = {
@@ -26,9 +26,17 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     send: 'Hi dude bro this is an awesome test'}).then(function (response) {
         console.log(response.body);
-        // React.render(<JsonTable rows={ response.body } />, document.body);
+        ReactDOM.render( <JsonTable className="table" rows = {response.body} / > ,
+          document.getElementById('container')
+        );
       })
   }
+
+  // testeroni(){
+  //       ReactDOM.render( <JsonTable className="table" rows = {} / > ,
+  //         document.getElementById('container')
+  //       );
+  // }
 
    projectionQuery(drinks){
     return axios.post('http://127.0.0.1:8000/ordering/', {
@@ -51,17 +59,17 @@ class App extends Component {
       })
   }
 
-   aggregationQuery(date){
+   aggregationQuery(){
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'date', query: 'aggregation'}).then(function (response) {
+    query: 'aggregation'}).then(function (response) {
         console.log(response);
       })
   }
 
 
-   groupbyQuery(cost){
+   groupbyQuery(){
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'cost', query: 'nested_aggregation'}).then(function (response) {
+    query: 'nested_aggregation'}).then(function (response) {
         console.log(response);
       })
   }
@@ -89,75 +97,45 @@ class App extends Component {
       })
   }
 
-  onSubmit = (model) => {
-    let data = [];
-
-    let newMod = JSON.parse(JSON.stringify(model))
-
-    if (newMod.id) {
-      data = this.state.data.filter((d) => {
-        return d.id != newMod.id
-      });
-    } else {
-      newMod.id = Math.random().toString(36).substr(2, 4);
-      data = this.state.data.slice();
-    }
-    this.setState({
-      data: [newMod, ...data],
-    });
-
-    model.name = ''
-    model.id = ''
-    model.creditcard = ''
-    model.address = ''
-    model.sandwich = ''
-    model.snack = ''
-    model.drink = ''
-
-
-  }
-
-  onEdit = (id) => {
-    let record = this.state.data.find((d) => {
-      return d.id == id;
-    });
-    alert(JSON.stringify(record));
-    this.setState({
-      current: record
-    })
-  }
+  // onSubmit = (model) => {
+  //   let data = [];
+  //
+  //   let newMod = JSON.parse(JSON.stringify(model))
+  //
+  //   if (newMod.id) {
+  //     data = this.state.data.filter((d) => {
+  //       return d.id != newMod.id
+  //     });
+  //   } else {
+  //     newMod.id = Math.random().toString(36).substr(2, 4);
+  //     data = this.state.data.slice();
+  //   }
+  //   this.setState({
+  //     data: [newMod, ...data],
+  //   });
+  //
+  //   model.name = ''
+  //   model.id = ''
+  //   model.creditcard = ''
+  //   model.address = ''
+  //   model.sandwich = ''
+  //   model.snack = ''
+  //   model.drink = ''
+  //
+  //
+  // }
+  //
+  // onEdit = (id) => {
+  //   let record = this.state.data.find((d) => {
+  //     return d.id == id;
+  //   });
+  //   alert(JSON.stringify(record));
+  //   this.setState({
+  //     current: record
+  //   })
+  // }
 
   render() {
-    let data = this.state.data.map((d) => {
-      return (
-        <table>
-          <tr>
-            <th>Order ID</th>
-            <th>Name</th>
-            <th>Sandwich</th>
-            <th>Drink</th>
-            <th>Snack</th>
-            <th>Credit Card</th>
-            <th>Address</th>
-            <th>Delivery</th>
-            <th>Edit your order</th>
-            <th>Delete your order</th>
-          </tr>
-          <tr key={d.id}>
-              <td>{d.id}</td>
-              <td>{d.name}</td>
-              <td>{d.sandwich}</td>
-              <td>{d.drink}</td>
-              <td>{d.snack}</td>
-              <td>{d.creditcard}</td>
-              <td>{d.address}</td>
-              <td>{d.delivery.toString()}</td>
-              <td><button onClick={()=>{this.onEdit(d.id)}}>edit</button></td>
-              <td><button>Delete</button></td>
-          </tr>
-        </table>
-      );
-    });
 
     return (
       <div className="App">
@@ -166,24 +144,7 @@ class App extends Component {
         <h1 className="App-title">SubAvenue Inc</h1>
         <button onClick={this.testeroni}>Switch to admin mode</button>
       </header>
-        <DynamicForm className="form"
-          title = "Place your order!"
-          defaultValues = "hello!"
-          model={[
-            // {key: "id", label: "ID", props: {required: true}},
-            {key: "name",label: "Name", type: "string"},
-            {key: "sandwich",label: "Sandwich", type: "string"},
-            {key: "drink",label: "Drink", type: "string", props:{min:0,max:5}},
-            {key: "snack",label: "Snack", type:"string"},
-            {key: "creditcard",label: "CreditCard", type:"number"},
-            {key: "address",label: "Address", type:"string"},
-            {key: "delivery",label: "Delivery?", type:"radio",options:[
-              {key:"true",label:"Yes",name:"delivery",value:"true"},
-              {key:"false",label:"No, pick up",name: "delivery",value:"false"}
-          ]}
-        ]}
-          onSubmit = {(model) => {this.onSubmit(model)}}
-        />
+
 
         <div align="left">
           <div>
@@ -195,10 +156,14 @@ class App extends Component {
               </select>
                    from table menuItems
 
+                   <button onClick={this.projectionQuery}>Submit</button>
+
           </div>
+          <br/>
           <div>
-            Selection query: Find menuitems from table menuItems where price > <input type="text" name="fname"></input>
+            Selection query: Find menuitems from table menuItems where price > <input type="text" name="fname"></input> <button onClick={this.selectionQuery}>Submit</button>
           </div>
+            <br/>
           <div>
             Join query: Find employee IDS who work at
             <select>
@@ -206,27 +171,33 @@ class App extends Component {
                <option value="pizza">USA</option>
                <option value="chicken">Mexico</option>
              </select>
+             <button onClick={this.joinQuery}>Submit</button>
           </div>
+            <br/>
           <div>
-            Aggregation query: Find most expensive sandwich on menu
+            Aggregation query: Find most expensive sandwich on menu   <button onClick={this.aggregationQuery}>Submit</button>
           </div>
+            <br/>
           <div>
-            Nested Aggregation query: Find the average order total for a customer who has placed more than 2 orders
+            Nested Aggregation query: Find the average order total for a customer who has placed more than 2 orders <button onClick={this.groupbyQuery}>Submit</button>
           </div>
+            <br/>
           <div>
-            Update query: Increase price of menu items by <input type="text" name="fname"></input>
+            Update query: Increase price of menu items by <input type="text" name="fname"></input> <button onClick={this.updateOp}>Submit</button>
           </div>
+            <br/>
           <div>
-            Delete query: Click delete icon in table
+            Delete query: Click delete icon in table <button onClick={this.deleteOp}>Submit</button>
           </div>
+            <br/>
           <div>
-            Division query: Find the customers who have ordered from all restaurant locations
+            Division query: Find the customers who have ordered from all restaurant locations <button onClick={this.divisionQuery}>Submit</button>
           </div>
         </div>
 
-        <table border="1">
-          <tbody>{data}</tbody>
-        </table>
+        <div id="container">
+
+        </div>
 
       </div>
     );
