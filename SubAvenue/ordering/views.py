@@ -15,57 +15,67 @@ def index(request):
 
 		if(query == 'projection'):
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT Customer FROM Customer;")
+				cursor.execute("SELECT CustomerID FROM Customer;")
 				row = cursor.fetchall()
 				print(row)
 
 		if(query == 'selection'):
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT MenuItem FROM MenuItem WHERE Price > 2;")
+				cursor.execute("SELECT MenuItemID FROM MenuItem WHERE Price > 2;")
 				row = cursor.fetchall()
 				print(row)	
 
 		if(query == 'join'):
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT e.Employee FROM Employee e, WorksAt w \
-					WHERE w.Restaurant = ‘R100’ AND w.Employee = e.Employee;")
+				cursor.execute("SELECT e.EmployeeID FROM Employee e, WorksAt w \
+					WHERE w.RestaurantID = 'R100' AND w.EmployeeID = e.EmployeeID;")
 				row = cursor.fetchall()
 				print(row)
 
 		if(query == 'aggregation'):
 			with connection.cursor() as cursor:
 				cursor.execute("SELECT MAX(MenuItem.Price) FROM MenuItem, Sandwich \
-					WHERE MenuItem.MenuItem = Sandwich.MenuItem;")
+					WHERE MenuItem.MenuItemID = Sandwich.MenuItemID;")
 				row = cursor.fetchall()
 				print(row)
 
 		if(query == 'nested_aggregation'):
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT Customer.Customer, AVG(Order.Cost) FROM Customer, Order \
-					WHERE Customer.Customer = Order.Customer AND Customer.Customer IN	\
-					(SELECT Customer FROM Order HAVING COUNT(Customer) > 2) \
-					GROUPBY Customer.Customer;")
+				cursor.execute("SELECT Customer.CustomerID, AVG(Orders.Cost) FROM Customer, Orders \
+					WHERE Customer.CustomerID = Orders.CustomerID AND Customer.CustomerID IN	\
+					(SELECT CustomerID FROM Orders HAVING COUNT(CustomerID) > 2);")
 				row = cursor.fetchall()
 				print(row)
 
 		if(query == 'update'):
 			with connection.cursor() as cursor:
-				cursor.execute("UPDATE MenuItem SET Price=Price+1 WHERE MenuItem IN \
-					(SELECT MenuItem FROM Snacks, MenuItem WHERE Snacks.MenuItem = MenuItem.MenuItem);")
+				cursor.execute("UPDATE MenuItem SET Price=Price+1 WHERE MenuItemID IN \
+					(SELECT MenuItemID FROM Snacks);")
+				cursor.execute("SELECT * FROM MenuItem WHERE MenuItemID IN (SELECT MenuItemID FROM Snacks);")
 				row = cursor.fetchall()
 				print(row)
+	
 
 		if(query == 'delete'):
 			with connection.cursor() as cursor:
-				cursor.execute("DELETE MenuItem FROM Sandwich WHERE SandwichSize = 'H';")
+				cursor.execute("DELETE FROM Sandwich WHERE SandwichSize = 'H';")
+				row = cursor.fetchall()
+				print(row)
+
+		if(query == 'insert'):
+			with connection.cursor() as cursor:
+				cursor.execute("INSERT INTO Sandwich (MenuItemID, SandwichName, SandwichSize ) \
+					VALUES ('M100', 'Chicken Sandwich', 'H'), \
+					('M105', 'Turkey Sandwich', 'H'), \
+					('M104', 'Tuna Sandwich', 'H');")
 				row = cursor.fetchall()
 				print(row)
 
 		if(query == 'division'):
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT Customer FROM Customer WHERE NOT EXISTS \
+				cursor.execute("SELECT CustomerID FROM Customer WHERE NOT EXISTS \
 					(SELECT * FROM Orders WHERE NOT EXISTS (SELECT RestaurantID FROM Restaurant \
-					WHERE Customer.Customer = Order.Customer AND Order.Restaurant = Restaurant.Restaurant)));")
+					WHERE Customer.CustomerID = Orders.CustomerID AND Orders.RestaurantID = Restaurant.RestaurantID));")
 				row = cursor.fetchall()
 				print(row)
 

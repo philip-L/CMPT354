@@ -39,6 +39,7 @@ class Orders(models.Model):
     OrderID = models.CharField(max_length=4, primary_key=True)
     Restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE, db_column="RestaurantID")
     Customer  = models.ForeignKey(Customer, on_delete=models.CASCADE, db_column="CustomerID")
+    Cost = models.FloatField()
     DeliverySuccess = models.BooleanField(default=False)
     DeliveryInstructions = models.CharField(max_length=255)
     OrderPlacementTime = models.DateTimeField()
