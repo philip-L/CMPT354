@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import DynamicForm from './components/DynamicForm';
 import axios from 'axios';
 import './App.css';
+// import JsonTable from 'react-json-table';
 
 class App extends Component {
   state = {
@@ -19,66 +21,67 @@ class App extends Component {
         console.log(response);
       })
   }
-  
+
   testeroni(){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     send: 'Hi dude bro this is an awesome test'}).then(function (response) {
-        console.log(response);
+        console.log(response.body);
+        // React.render(<JsonTable rows={ response.body } />, document.body);
       })
   }
-  
+
    projectionQuery(drinks){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'drinks', query: 'projection'}).then(function (response) {
         console.log(response);
       })
   }
-  
+
    selectionQuery(price){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'price', query: 'selection'}).then(function (response) {
         console.log(response);
       })
   }
-  
+
    joinQuery(restaurant){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'restaurant', query: 'join'}).then(function (response) {
         console.log(response);
       })
   }
-  
+
    aggregationQuery(date){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'date', query: 'aggregation'}).then(function (response) {
         console.log(response);
       })
   }
-  
-  
+
+
    groupbyQuery(cost){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'cost', query: 'nested_aggregation'}).then(function (response) {
         console.log(response);
       })
   }
-  
-  
+
+
    updateOp(price){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'price', query:'update'}).then(function (response) {
         console.log(response);
       })
   }
-  
-  
+
+
    deleteOp(menuItemID){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'menuItemID', query: 'delete'}).then(function (response) {
         console.log(response);
       })
   }
-  
+
    divisionQuery(restaurantID){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: 'restaurantID', query: 'division'}).then(function (response) {
@@ -182,45 +185,44 @@ class App extends Component {
           onSubmit = {(model) => {this.onSubmit(model)}}
         />
 
-      <div align="left">
-        <div>
-          Projection query: Find ____ from table _____
+        <div align="left">
+          <div>
+            Projection query: Find
+             <select>
+                <option value="sandwich">menuItemID</option>
+                <option value="pizza">Description</option>
+                <option value="chicken">Price</option>
+              </select>
+                   from table menuItems
 
+          </div>
+          <div>
+            Selection query: Find menuitems from table menuItems where price > <input type="text" name="fname"></input>
+          </div>
+          <div>
+            Join query: Find employee IDS who work at
+            <select>
+               <option value="sandwich">Canada</option>
+               <option value="pizza">USA</option>
+               <option value="chicken">Mexico</option>
+             </select>
+          </div>
+          <div>
+            Aggregation query: Find most expensive sandwich on menu
+          </div>
+          <div>
+            Nested Aggregation query: Find the average order total for a customer who has placed more than 2 orders
+          </div>
+          <div>
+            Update query: Increase price of menu items by <input type="text" name="fname"></input>
+          </div>
+          <div>
+            Delete query: Click delete icon in table
+          </div>
+          <div>
+            Division query: Find the customers who have ordered from all restaurant locations
+          </div>
         </div>
-        <div>
-          Selection query: Find ____ from table _____ where ____ > ____
-          <select>
-            <option value="veggie">veggie</option>
-            <option value="pizza">pizza</option>
-            <option value="chicken">chicken</option>
-            <option value="roasted">roasted</option>
-          </select>
-          <select>
-            <option value="veggie">veggie</option>
-            <option value="pizza">pizza</option>
-            <option value="chicken">chicken</option>
-            <option value="roasted">roasted</option>
-          </select>
-        </div>
-        <div>
-          Join query: Find _____ where _____ = _____
-        </div>
-        <div>
-          Aggregation query: Find average price of sandwiches
-        </div>
-        <div>
-          Nested Aggregation query:
-        </div>
-        <div>
-          Update query: Click update icon in table
-        </div>
-        <div>
-          Delete query: Click delete icon in table
-        </div>
-        <div>
-          Division query: Click to find people who bought all sandwiches
-        </div>
-      </div>
 
         <table border="1">
           <tbody>{data}</tbody>
