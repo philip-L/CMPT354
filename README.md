@@ -7,9 +7,11 @@ cd CMPT354/react-dynamicform
 
 0. npm add yarn
 
-1. yarn
+1. npm install axios
 
-2. npm start
+2. yarn
+
+3. npm start
 
 ## Backend
 
