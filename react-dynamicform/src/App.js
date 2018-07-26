@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DynamicForm from './components/DynamicForm';
+import axios from 'axios';
 import './App.css';
 
 class App extends Component {
@@ -10,6 +11,13 @@ class App extends Component {
       {id: 'R3U4', name: "Craig Scratchley", sandwich:"Beef", drink:"Nestea", snack:"Pringles",creditcard:34324,address:"420 Place", delivery: true},
     ],
     current: {}
+  }
+
+
+  getUserInfo(){
+    return axios.get('https://api.github.com/users/prabhubly').then(function (response) {
+        console.log(response);
+      })
   }
 
   onSubmit = (model) => {
@@ -87,7 +95,7 @@ class App extends Component {
       <header className="App-header">
         <img src='http://www.clker.com/cliparts/d/6/b/9/11949852831476265676tramezzino.svg.thumb.png' className="App-logo" alt="logo" />
         <h1 className="App-title">SubAvenue Inc</h1>
-        <button>Switch to admin mode</button>
+        <button onClick={this.getUserInfo}>Switch to admin mode</button>
       </header>
         <DynamicForm className="form"
           title = "Place your order!"
@@ -111,9 +119,22 @@ class App extends Component {
       <div align="left">
         <div>
           Projection query: Find ____ from table _____
+
         </div>
         <div>
           Selection query: Find ____ from table _____ where ____ > ____
+          <select>
+            <option value="veggie">veggie</option>
+            <option value="pizza">pizza</option>
+            <option value="chicken">chicken</option>
+            <option value="roasted">roasted</option>
+          </select>
+          <select>
+            <option value="veggie">veggie</option>
+            <option value="pizza">pizza</option>
+            <option value="chicken">chicken</option>
+            <option value="roasted">roasted</option>
+          </select>
         </div>
         <div>
           Join query: Find _____ where _____ = _____
