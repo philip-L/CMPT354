@@ -21,7 +21,7 @@ class App extends Component {
   }
 
   testeroni(){
-    return axios.post('https://api.github.com/users/prabhubly', {
+    return axios.post('http://127.0.0.1:8000/ordering/', {
     send: 'Hi dude bro this is an awesome test'}).then(function (response) {
         console.log(response);
       })
