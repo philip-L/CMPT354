@@ -2,27 +2,27 @@ from django.db import models
 
 # Create your models here.
 class Restaurant(models.Model):
-    Restaurant = models.CharField(max_length=4, primary_key=True)
+    RestaurantID = models.CharField(max_length=4, primary_key=True)
     Address  = models.CharField(max_length=255)
     class Meta:
         db_table = 'Restaurant'
 
 class Employee(models.Model):
-    Employee = models.CharField(max_length=4, primary_key=True)
+    EmployeeID = models.CharField(max_length=4, primary_key=True)
     EmployeeName = models.CharField(max_length=255)
     EmployeePosition = models.CharField(max_length=255)
     class Meta:
         db_table = 'Employee'
 
 class WorksAt(models.Model):
-    Restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    Employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    Restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, db_column="RestaurantID")
+    Employee = models.ForeignKey(Employee, on_delete=models.CASCADE, db_column="EmployeeID" )
     class Meta:
         db_table = 'WorksAt'
         unique_together = (("Restaurant", "Employee"),)
 
 class Customer(models.Model):
-    Customer = models.CharField(max_length=4, primary_key=True)
+    CustomerID = models.CharField(max_length=4, primary_key=True)
     Name  = models.CharField(max_length=255)
     Email  = models.CharField(max_length=255)
     CardNumber  = models.IntegerField()
@@ -36,9 +36,9 @@ class Orders(models.Model):
         ('D', 'Delivery'),
         ('P', 'Pickup'),
     )
-    Order = models.CharField(max_length=4, primary_key=True)
-    Restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    Customer  = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    OrderID = models.CharField(max_length=4, primary_key=True)
+    Restaurant  = models.ForeignKey(Restaurant, on_delete=models.CASCADE, db_column="RestaurantID")
+    Customer  = models.ForeignKey(Customer, on_delete=models.CASCADE, db_column="CustomerID")
     DeliverySuccess = models.BooleanField(default=False)
     DeliveryInstructions = models.CharField(max_length=255)
     OrderPlacementTime = models.DateTimeField()
@@ -49,7 +49,7 @@ class Orders(models.Model):
 
 
 class MenuItem(models.Model):
-    MenuItem = models.CharField(max_length=4, primary_key=True)
+    MenuItemID = models.CharField(max_length=4, primary_key=True)
     ItemName  = models.CharField(max_length=255)
     Price  = models.FloatField()
     class Meta:
@@ -57,8 +57,8 @@ class MenuItem(models.Model):
 
 
 class Contain(models.Model):
-    Order = models.ForeignKey(Orders, on_delete=models.CASCADE)
-    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    Order = models.ForeignKey(Orders, on_delete=models.CASCADE, db_column="OrderID")
+    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE, db_column="MenuItemID")
     Quantity  = models.IntegerField()
     class Meta:
         db_table = 'Contain'
@@ -70,7 +70,7 @@ class Sandwich(models.Model):
         ('H', '6-inch'),
         ('F', 'Foot-long'),
     )
-    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE, db_column="MenuItemID")
     SandwichName = models.CharField(max_length=255)
     SandwichSize = models.CharField(max_length=1, choices=sizes)
     class Meta:
@@ -83,7 +83,7 @@ class Drinks(models.Model):
         ('M', 'Medium'),
         ('L', 'Large'),
     )
-    MenuItem = models.OneToOneField(MenuItem, on_delete=models.CASCADE)
+    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE, db_column="MenuItemID")
     DrinkName = models.CharField(max_length=255)
     DrinkSize = models.CharField(max_length=1, choices=sizes)
     class Meta:
@@ -91,22 +91,22 @@ class Drinks(models.Model):
 
 
 class Snacks(models.Model):
-    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
+    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE, db_column="MenuItemID")
     SnackName = models.CharField(max_length=255)
     class Meta:
         db_table = 'Snacks'
 
 
 class Ingredients(models.Model):
-    Ingredient = models.CharField(max_length=4, primary_key=True)
+    IngredientID = models.CharField(max_length=4, primary_key=True)
     IngredientName = models.CharField(max_length=255)
     class Meta:
         db_table = 'Ingredients'
 
 
 class MadeWith(models.Model):
-    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE)
-    Ingredient  = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
+    MenuItem = models.ForeignKey(MenuItem, on_delete=models.CASCADE, db_column="MenuItemID")
+    Ingredient  = models.ForeignKey(Ingredients, on_delete=models.CASCADE, db_column="IngredientID")
     class Meta:
         db_table = 'MadeWith'
         unique_together = (("MenuItem", "Ingredient"),)
