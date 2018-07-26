@@ -20,6 +20,13 @@ class App extends Component {
       })
   }
 
+  testeroni(){
+    return axios.post('https://api.github.com/users/prabhubly', {
+    send: 'Hi dude bro this is an awesome test'}).then(function (response) {
+        console.log(response);
+      })
+  }
+
   onSubmit = (model) => {
     let data = [];
 
@@ -95,7 +102,7 @@ class App extends Component {
       <header className="App-header">
         <img src='http://www.clker.com/cliparts/d/6/b/9/11949852831476265676tramezzino.svg.thumb.png' className="App-logo" alt="logo" />
         <h1 className="App-title">SubAvenue Inc</h1>
-        <button onClick={this.getUserInfo}>Switch to admin mode</button>
+        <button onClick={this.testeroni}>Switch to admin mode</button>
       </header>
         <DynamicForm className="form"
           title = "Place your order!"
