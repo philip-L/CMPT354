@@ -123,7 +123,7 @@ class App extends Component {
                 <option value="Price">Price</option>
               </select>
                    from table menuItems
-                   <button onClick={this.submit}>Submit</button>
+                   <button onClick={this.projectionQuery}>Submit</button>
 
           </div>
           <br/>
