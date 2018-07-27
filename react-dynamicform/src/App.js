@@ -73,7 +73,7 @@ class App extends Component {
 
 
    updateOp(){
-     var val = (Number(document.getElementById("update").value)/100 + 1);
+     var val = (Number(document.getElementById("update").value));
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: this.val, query:'update'}).then(function (response) {
         console.log(response);
@@ -152,7 +152,7 @@ class App extends Component {
           </div>
             <br/>
           <div>
-            Update query: Increase price of menu items by <input id='update' type="number" name="fname"></input> % <button onClick={this.updateOp}>Submit</button>
+            Update query: Increase price of menu items by $<input id='update' type="number" name="fname"></input>  <button onClick={this.updateOp}>Submit</button>
           </div>
             <br/>
           <div>
