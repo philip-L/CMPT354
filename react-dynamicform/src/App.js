@@ -18,7 +18,7 @@ class App extends Component {
    projectionQuery(){
     var val = document.getElementById("proj").value;
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: this.val, query: 'projection'}).then(function (response) {
+    attr: val, query: 'projection'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response.data} / > ,
           document.getElementById('container')
@@ -30,7 +30,7 @@ class App extends Component {
      var val = Number(document.getElementById("sel").value);
 
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: this.val, query: 'selection'}).then(function (response) {
+    attr: val, query: 'selection'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
@@ -42,7 +42,7 @@ class App extends Component {
      var val = document.getElementById("join").value;
 
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: this.val, query: 'join'}).then(function (response) {
+    attr: val, query: 'join'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
@@ -75,7 +75,7 @@ class App extends Component {
    updateOp(){
      var val = (Number(document.getElementById("update").value));
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: this.val, query:'update'}).then(function (response) {
+    attr: val, query:'update'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
@@ -87,7 +87,7 @@ class App extends Component {
    deleteOp(){
      var val = document.getElementById("delete").value;
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: this.val, query: 'delete'}).then(function (response) {
+    attr: val, query: 'delete'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
