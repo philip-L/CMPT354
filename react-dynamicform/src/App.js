@@ -12,29 +12,13 @@ class App extends Component {
       {id: '56G4', name: "Lucky One", sandwich:"Chicken", drink:"Sprite", snack:"Cookie",creditcard:22433,address:"456 Ave", delivery: false},
       {id: 'R3U4', name: "Craig Scratchley", sandwich:"Beef", drink:"Nestea", snack:"Pringles",creditcard:34324,address:"420 Place", delivery: true},
     ],
-    current: {}
+    current: {},
   }
 
-
-  getUserInfo(){
-    return axios.get('https://api.github.com/users/prabhubly').then(function (response) {
-        console.log(response);
-      })
-  }
-
-  testeroni(){
+   projectionQuery(){
+    var val = document.getElementById("proj").value;
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    send: 'Hi dude bro this is an awesome test'}).then(function (response) {
-        console.log(response.body);
-        ReactDOM.render( <JsonTable className="table" rows = {response.body} / > ,
-          document.getElementById('container')
-        );
-      })
-  }
-
-   projectionQuery(drinks){
-    return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'drinks', query: 'projection'}).then(function (response) {
+    attr: this.val, query: 'projection'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response.data} / > ,
           document.getElementById('container')
@@ -42,16 +26,20 @@ class App extends Component {
       })
   }
 
-   selectionQuery(price){
+   selectionQuery(){
+     var val = Number(document.getElementById("sel").value);
+
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'price', query: 'selection'}).then(function (response) {
+    attr: this.val, query: 'selection'}).then(function (response) {
         console.log(response);
       })
   }
 
-   joinQuery(restaurant){
+   joinQuery(){
+     var val = document.getElementById("join").value;
+
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'restaurant', query: 'join'}).then(function (response) {
+    attr: this.val, query: 'join'}).then(function (response) {
         console.log(response);
       })
   }
@@ -72,17 +60,19 @@ class App extends Component {
   }
 
 
-   updateOp(price){
+   updateOp(){
+     var val = (Number(document.getElementById("update").value)/100 + 1);
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'price', query:'update'}).then(function (response) {
+    attr: this.val, query:'update'}).then(function (response) {
         console.log(response);
       })
   }
 
 
-   deleteOp(menuItemID){
+   deleteOp(){
+     var val = document.getElementById("delete").value;
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'menuItemID', query: 'delete'}).then(function (response) {
+    attr: this.val, query: 'delete'}).then(function (response) {
         console.log(response);
       })
   }
@@ -94,44 +84,6 @@ class App extends Component {
       })
   }
 
-  // onSubmit = (model) => {
-  //   let data = [];
-  //
-  //   let newMod = JSON.parse(JSON.stringify(model))
-  //
-  //   if (newMod.id) {
-  //     data = this.state.data.filter((d) => {
-  //       return d.id != newMod.id
-  //     });
-  //   } else {
-  //     newMod.id = Math.random().toString(36).substr(2, 4);
-  //     data = this.state.data.slice();
-  //   }
-  //   this.setState({
-  //     data: [newMod, ...data],
-  //   });
-  //
-  //   model.name = ''
-  //   model.id = ''
-  //   model.creditcard = ''
-  //   model.address = ''
-  //   model.sandwich = ''
-  //   model.snack = ''
-  //   model.drink = ''
-  //
-  //
-  // }
-  //
-  // onEdit = (id) => {
-  //   let record = this.state.data.find((d) => {
-  //     return d.id == id;
-  //   });
-  //   alert(JSON.stringify(record));
-  //   this.setState({
-  //     current: record
-  //   })
-  // }
-
   render() {
 
     return (
@@ -139,34 +91,33 @@ class App extends Component {
       <header className="App-header">
         <img src='http://www.clker.com/cliparts/d/6/b/9/11949852831476265676tramezzino.svg.thumb.png' className="App-logo" alt="logo" />
         <h1 className="App-title">SubAvenue Inc</h1>
-        <button onClick={this.testeroni}>Switch to admin mode</button>
       </header>
-
 
         <div align="left">
           <div>
             Projection query: Find
-             <select>
-                <option value="sandwich">menuItemID</option>
-                <option value="pizza">Description</option>
-                <option value="chicken">Price</option>
+             <select id = 'proj'>
+                <option value="menuItemID">menuItemID</option>
+                <option value="Description">Description</option>
+                <option value="Price">Price</option>
               </select>
                    from table menuItems
-
-                   <button onClick={this.projectionQuery}>Submit</button>
+                   <button onClick={this.submit}>Submit</button>
 
           </div>
           <br/>
           <div>
-            Selection query: Find menuitems from table menuItems where price > <input type="text" name="fname"></input> <button onClick={this.selectionQuery}>Submit</button>
+            Selection query: Find menuitems from table menuItems where price > <input id = 'sel' type="number" name="fname"></input> <button onClick={this.selectionQuery}>Submit</button>
           </div>
             <br/>
           <div>
             Join query: Find employee IDS who work at
-            <select>
-               <option value="sandwich">Canada</option>
-               <option value="pizza">USA</option>
-               <option value="chicken">Mexico</option>
+            <select id="join">
+               <option value="123 Toasted Street, Vancouver BC">123 Toasted Street, Vancouver BC</option>
+               <option value="67A Whole Wheat Place, Vancouver BC">67A Whole Wheat Place, Vancouver BC</option>
+               <option value="500 Mayo Drive, Burnaby BC">500 Mayo Drive, Burnaby BC</option>
+               <option value="32G Lettuce Street, Vancouver BC">32G Lettuce Street, Vancouver BC</option>
+               <option value="13 Ketchup Court, Delta BC">13 Ketchup Court, Delta BC</option>
              </select>
              <button onClick={this.joinQuery}>Submit</button>
           </div>
@@ -180,11 +131,16 @@ class App extends Component {
           </div>
             <br/>
           <div>
-            Update query: Increase price of menu items by <input type="text" name="fname"></input> <button onClick={this.updateOp}>Submit</button>
+            Update query: Increase price of menu items by <input id='update' type="number" name="fname"></input> % <button onClick={this.updateOp}>Submit</button>
           </div>
             <br/>
           <div>
-            Delete query: Click delete icon in table <button onClick={this.deleteOp}>Submit</button>
+            Delete query: Delete sandwiches of the size
+            <select id="delete">
+               <option value="H">Half</option>
+               <option value="F">Full</option>
+           </select>
+            <button onClick={this.deleteOp}>Submit</button>
           </div>
             <br/>
           <div>
