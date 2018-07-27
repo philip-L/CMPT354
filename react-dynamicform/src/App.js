@@ -32,6 +32,9 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: this.val, query: 'selection'}).then(function (response) {
         console.log(response);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
       })
   }
 
@@ -41,13 +44,19 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: this.val, query: 'join'}).then(function (response) {
         console.log(response);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
       })
   }
 
    aggregationQuery(){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     query: 'aggregation'}).then(function (response) {
-        console.log(response);
+        console.log(response['data']);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
       })
   }
 
@@ -55,7 +64,10 @@ class App extends Component {
    groupbyQuery(){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     query: 'nested_aggregation'}).then(function (response) {
-        console.log(response);
+        console.log(response['data']);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
       })
   }
 
@@ -65,6 +77,9 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: this.val, query:'update'}).then(function (response) {
         console.log(response);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
       })
   }
 
@@ -74,13 +89,19 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: this.val, query: 'delete'}).then(function (response) {
         console.log(response);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
       })
   }
 
    divisionQuery(restaurantID){
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'restaurantID', query: 'division'}).then(function (response) {
-        console.log(response);
+    query: 'division'}).then(function (response) {
+        console.log(response['data']);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
       })
   }
 
