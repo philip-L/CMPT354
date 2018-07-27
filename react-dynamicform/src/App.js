@@ -26,17 +26,17 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     send: 'Hi dude bro this is an awesome test'}).then(function (response) {
         console.log(response.body);
-        ReactDOM.render( <JsonTable className="table" rows = {response.body} / > ,
+        ReactDOM.render( <JsonTable className="table" rows = {response.data}/> ,
           document.getElementById('container')
-        );
+          );
       })
   }
 
    projectionQuery(drinks){
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: 'drinks', query: 'projection'}).then(function (response) {
-        console.log(response);
-        ReactDOM.render( <JsonTable className="table" rows = {response.data} / > ,
+    attribute: 'menuItemID', query: 'projection'}).then(function (response) {
+        console.log(response['data']);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
         );
       })
