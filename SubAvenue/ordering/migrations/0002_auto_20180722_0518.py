@@ -29,12 +29,17 @@ class Migration(migrations.Migration):
     		('C103', 'Rachel Boo', 'rb@live.ca', '2348969', '3A Grand St', 'spr1t3'), \
     		('C104', 'Carly Ben', 'cb@live.ca', '4768043', 'F4 Past Ave', 'ch33se');"),
 
-    	migrations.RunSQL("INSERT INTO  Orders (`OrderID`, `RestaurantID`, `CustomerID`, `Cost` `DeliverySuccess`, `DeliveryInstructions`, `OrderPlacementTime`, `OrderCompletionTime`, `DeliveryOrPickup`) \
-    		VALUES ('O100', 'R100', 'C100', 5.50 True, 'Garage', '2018-06-18 12:17:17', '2018-06-18 12:35:01', 'D'), \
-    		('O101', 'R101', 'C101', False, 2.00 'Behind park', '2018-06-14 12:17:17', '2018-06-14 12:17:17', 'D'), \
-    		('O102', 'R102', 'C102', True, 8.75 'N/A', '2018-06-15 12:17:17', '2018-06-15 12:17:17', 'P'), \
-    		('O103', 'R103', 'C103', False, 10.50 'Downstairs', '2018-06-20 12:17:17', '2018-06-20 12:17:17', 'D'), \
-    		('O104', 'R104', 'C104', True, 5.50 'No nuts', '2018-06-21 12:17:17', '2018-06-21 12:17:17', 'P');"),
+    	migrations.RunSQL("INSERT INTO  Orders (`OrderID`, `RestaurantID`, `CustomerID`, `DeliverySuccess`, `Cost` , `DeliveryInstructions`, `OrderPlacementTime`, `OrderCompletionTime`, `DeliveryOrPickup`) \
+    		VALUES ('O100', 'R100', 'C100', True, 5.50, 'Garage', '2018-06-14 12:17:17', '2018-06-14 12:35:01', 'D'), \
+    		('O101', 'R101', 'C101', False, 2.00, 'Behind park', '2018-06-15 12:17:17', '2018-06-15 12:42:17', 'D'), \
+    		('O102', 'R102', 'C102', True, 8.75, 'N/A', '2018-06-18 12:17:17', '2018-06-18 12:38:17', 'P'), \
+    		('O103', 'R103', 'C103', False, 10.50, 'Downstairs', '2018-06-20 12:17:17', '2018-06-20 12:44:17', 'D'), \
+    		('O104', 'R104', 'C104', True, 5.50, 'N/A', '2018-06-21 12:17:17', '2018-06-21 12:51:17', 'P'),\
+			('O105', 'R102', 'C105', True, 1.00, 'Front door', '2018-06-22 12:17:17', '2018-06-22 12:32:17', 'D'),\
+			('O106', 'R103', 'C101', True, 5.50, 'N/A', '2018-06-22 12:17:17', '2018-06-22 12:24:17', 'P'),\
+			('O107', 'R104', 'C101', True, 8.75, 'Back door', '2018-06-23 12:17:17', '2018-06-23 12:46:17', 'D'),\
+			('O108', 'R100', 'C101', True, 4.50, 'N/A', '2018-06-24 12:17:17', '2018-06-24 12:37:17', 'P'),\
+			('O109', 'R102', 'C101', True, 10.75, 'N/A', '2018-06-24 12:17:17', '2018-06-24 12:48:17', 'P');"),
 
 
     	migrations.RunSQL("INSERT INTO MenuItem (MenuItemID, ItemName, Price) VALUES \
@@ -49,7 +54,7 @@ class Migration(migrations.Migration):
 
     	migrations.RunSQL("INSERT INTO Contain (OrderID, MenuItemID, Quantity) \
     		VALUES  ('O100', 'M100', 1), ('O101', 'M101', 2), ('O102', 'M100', 3), ('O103', 'M102', 1), \
-    		('O104', 'M103', 3);"),
+    		('O104', 'M103', 3), ('O105', 'M102', '1'), ('O106', 'M100', '1'), ('O107', 'M108', '1'), ('O108', 'M110', '2'), ('O109', 'M104', '2');"),
 
     	migrations.RunSQL("INSERT INTO Sandwich (MenuItemID, SandwichName, SandwichSize ) \
     		VALUES ('M100', 'Chicken Sandwich', 'H'), ('M107', 'Ham and Cheese', 'F'), \
