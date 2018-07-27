@@ -118,7 +118,7 @@ class App extends Component {
           <div>
             Projection query: Find
              <select id = 'proj'>
-                <option value="menuItemID">menuItemID</option>
+                <option value="MenuItemID">menuItemID</option>
                 <option value="Description">Description</option>
                 <option value="Price">Price</option>
               </select>
