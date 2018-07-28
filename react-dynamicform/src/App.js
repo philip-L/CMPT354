@@ -40,10 +40,11 @@ class App extends Component {
   }
 
    joinQuery(){
-     var val = document.getElementById("join").value;
+     var val = document.getElementById("join1").value;
+     var val2 = document.getElementById("join").value;
 
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: val, query: 'join'}).then(function (response) {
+    attr: val, loc: val2, query: 'join'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
@@ -157,7 +158,13 @@ class App extends Component {
           <br/>
 
           <div>
-            Join query: Find the EmployeeID of employees who work at
+            Join query: Find the 
+            <select id="join1">
+               <option value="EmployeeID">EmployeeID</option>
+               <option value="EmployeeName">EmployeeName</option>
+               <option value="EmployeePosition">EmployeePosition</option>
+             </select>
+            of employees who work at
             <select id="join">
                <option value="123 Toasted Street, Vancouver BC">123 Toasted Street, Vancouver BC</option>
                <option value="67A Whole Wheat Place, Vancouver BC">67A Whole Wheat Place, Vancouver BC</option>

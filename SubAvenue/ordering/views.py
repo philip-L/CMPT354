@@ -42,8 +42,9 @@ def index(request):
 
 		if(query == 'join'):
 			attr = json_obj['attr']
-			sql = "SELECT e.EmployeeID FROM Employee e, WorksAt w, Restaurant r \
-					WHERE r.RestaurantID = w.RestaurantID AND w.EmployeeID = e.EmployeeID AND r.Address = '%s';" % (attr)
+			loc = json_obj['loc']
+			sql = "SELECT e.%s FROM Employee e, WorksAt w, Restaurant r \
+					WHERE r.RestaurantID = w.RestaurantID AND w.EmployeeID = e.EmployeeID AND r.Address = '%s';" % (attr, loc)
 
 			with connection.cursor() as cursor:
 				cursor.execute(sql)
