@@ -70,13 +70,17 @@ When using the database shell:
     USE SubAve;
     SHOW tables;
 
-### Creating tables and populating the database
+### Creating tables and populating the database (final steps)
 
 This is done through django. It is accomplished through migrations (https://docs.djangoproject.com/en/2.0/intro/tutorial02/):
 
-Use these commands:
+From inside the CMPT354/SubAve directory use these commands:
         
         To apply the migrations to populate database: python manage.py migrate
         To create a new migration: python manage.py makemigrations ordering
         To view the sql before applying a migration: python manage.py sqlmigrate ordering 0001
+
+Finally run the following command to start the django server:
+        
+        python manage.py runserver
 
