@@ -3,15 +3,15 @@ Project for Database Systems I at Simon Fraser University
 
 ## Front end
 
+Download node.js with npm https://www.npmjs.com/get-npm
+
 cd CMPT354/react-dynamicform
 
 0. npm add yarn
 
-1. npm install axios
+1. yarn
 
-2. yarn
-
-3. npm start
+2. npm start
 
 ## Backend
 
