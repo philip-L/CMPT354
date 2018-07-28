@@ -19,10 +19,9 @@ def index(request):
 	if request.method == "POST":
 		json_obj = json.loads(request.body)
 		query = json_obj['query']
-		attr = json_obj['attribute']
-		ArrayOfDics = []
 
 		if(query == 'projection'):
+			attr = json_obj['attr']
 			sql = "SELECT %s FROM MenuItem;" % (attr)
 			
 			with connection.cursor() as cursor:
@@ -32,45 +31,73 @@ def index(request):
 				print(row)
 
 		if(query == 'selection'):
+			attr = json_obj['attr']
+			num = json_obj['num']
+			sql = "SELECT %s FROM MenuItem WHERE Price > %f;" % (attr, num)
+
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT MenuItemID FROM MenuItem WHERE Price > 2;")
+				cursor.execute(sql)
 				row = dictfetchall(cursor)
 				print(row)	
 
 		if(query == 'join'):
+			attr = json_obj['attr']
+			sql = "SELECT e.EmployeeID FROM Employee e, WorksAt w, Restaurant r \
+					WHERE r.RestaurantID = w.RestaurantID AND w.EmployeeID = e.EmployeeID AND r.Address = '%s';" % (attr)
+
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT e.EmployeeID FROM Employee e, WorksAt w \
-					WHERE w.RestaurantID = 'R100' AND w.EmployeeID = e.EmployeeID;")
+				cursor.execute(sql)
 				row = dictfetchall(cursor)
 				print(row)
 
 		if(query == 'aggregation'):
+			attr = json_obj['attr']
+			s = 'm.'+attr
+			sql = "SELECT %s FROM MenuItem m, Sandwich s \
+					WHERE m.Price = (SELECT MAX(m.Price) FROM MenuItem m) AND m.MenuItemID = s.MenuItemID;" % (s)
+
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT MAX(MenuItem.Price) FROM MenuItem, Sandwich \
-					WHERE MenuItem.MenuItemID = Sandwich.MenuItemID;")
+				cursor.execute(sql)
 				row = dictfetchall(cursor)
 				print(row)
 
 		if(query == 'nested_aggregation'):
+			
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT Customer.CustomerID, AVG(Orders.Cost) FROM Customer, Orders \
-					WHERE Customer.CustomerID = Orders.CustomerID AND Customer.CustomerID IN	\
-					(SELECT CustomerID FROM Orders HAVING COUNT(CustomerID) > 2);")
+				cursor.execute("SELECT c.CustomerID, AVG(o.Cost) FROM Customer c, Orders o \
+					WHERE c.CustomerID = o.CustomerID AND c.CustomerID IN	\
+					(SELECT CustomerID FROM Orders GROUP BY CustomerID HAVING COUNT(*) > 2) GROUP BY c.CustomerID;")
 				row = dictfetchall(cursor)
-				print(row)
+
+				for rows in row:
+					rows['Cost'] = str(rows['AVG(o.Cost)'])
+					if 'AVG(o.Cost)' in rows:
+						del rows['AVG(o.Cost)']
+					
 
 		if(query == 'update'):
+			attr = json_obj['attr']
+			sql = "UPDATE MenuItem SET Price=Price+%f WHERE MenuItemID IN \
+					(SELECT MenuItemID FROM Snacks);" % (attr)
 			with connection.cursor() as cursor:
-				cursor.execute("UPDATE MenuItem SET Price=Price+1 WHERE MenuItemID IN \
-					(SELECT MenuItemID FROM Snacks);")
+				cursor.execute(sql)
 				cursor.execute("SELECT * FROM MenuItem WHERE MenuItemID IN (SELECT MenuItemID FROM Snacks);")
 				row = dictfetchall(cursor)
 				print(row)
-	
+		
+		if(query == 'viewSandwiches'):
+			
+			with connection.cursor() as cursor:
+				cursor.execute("SELECT * FROM Sandwich;")
+				row = dictfetchall(cursor)
+				print(row)
 
 		if(query == 'delete'):
+			attr = json_obj['attr']
+			sql = "DELETE FROM Sandwich WHERE SandwichSize = '%s';" % (attr)
+
 			with connection.cursor() as cursor:
-				cursor.execute("DELETE FROM Sandwich WHERE SandwichSize = 'H';")
+				cursor.execute(sql)
 				cursor.execute("SELECT * FROM Sandwich;")
 				row = dictfetchall(cursor)
 				print(row)
@@ -81,14 +108,19 @@ def index(request):
 					VALUES ('M100', 'Chicken Sandwich', 'H'), \
 					('M105', 'Turkey Sandwich', 'H'), \
 					('M104', 'Tuna Sandwich', 'H');")
+				cursor.execute("SELECT * FROM Sandwich;")
 				row = dictfetchall(cursor)
 				print(row)
 
 		if(query == 'division'):
+			attr = json_obj['attr']
+			sql = "SELECT c.%s FROM Customer c \
+					WHERE NOT EXISTS (SELECT * FROM Restaurant r \
+					WHERE NOT EXISTS (SELECT o.CustomerID FROM Orders o \
+					WHERE c.CustomerID = o.CustomerID AND r.RestaurantID = o.RestaurantID));" % (attr)
+
 			with connection.cursor() as cursor:
-				cursor.execute("SELECT CustomerID FROM Customer WHERE NOT EXISTS \
-					(SELECT * FROM Orders WHERE NOT EXISTS (SELECT RestaurantID FROM Restaurant \
-					WHERE Customer.CustomerID = Orders.CustomerID AND Orders.RestaurantID = Restaurant.RestaurantID));")
+				cursor.execute(sql)
 				row = dictfetchall(cursor)
 				print(row)
 

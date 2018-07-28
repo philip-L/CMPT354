@@ -20,7 +20,7 @@ class App extends Component {
     return axios.post('http://127.0.0.1:8000/ordering/', {
     attr: val, query: 'projection'}).then(function (response) {
         console.log(response);
-        ReactDOM.render( <JsonTable className="table" rows = {response.data} / > ,
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']} / > ,
           document.getElementById('container')
         );
       })
@@ -28,9 +28,10 @@ class App extends Component {
 
    selectionQuery(){
      var val = Number(document.getElementById("sel").value);
+     var val2 = document.getElementById("sel2").value;
 
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    attr: val, query: 'selection'}).then(function (response) {
+    attr: val2, num: val, query: 'selection'}).then(function (response) {
         console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
@@ -51,9 +52,11 @@ class App extends Component {
   }
 
    aggregationQuery(){
+    var val = document.getElementById("aggr").value;
+
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    query: 'aggregation'}).then(function (response) {
-        console.log(response['data']);
+    attr: val, query: 'aggregation'}).then(function (response) {
+        console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
         );
@@ -64,7 +67,7 @@ class App extends Component {
    groupbyQuery(){
     return axios.post('http://127.0.0.1:8000/ordering/', {
     query: 'nested_aggregation'}).then(function (response) {
-        console.log(response['data']);
+        console.log(response);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
         );
@@ -84,6 +87,16 @@ class App extends Component {
   }
 
 
+  viewSandwiches(){
+    return axios.post('http://127.0.0.1:8000/ordering/', {
+    query: 'viewSandwiches'}).then(function (response) {
+        console.log(response);
+        ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
+          document.getElementById('container')
+        );
+      })
+  }
+
    deleteOp(){
      var val = document.getElementById("delete").value;
     return axios.post('http://127.0.0.1:8000/ordering/', {
@@ -96,8 +109,9 @@ class App extends Component {
   }
 
    divisionQuery(restaurantID){
+    var val = document.getElementById("div").value;
     return axios.post('http://127.0.0.1:8000/ordering/', {
-    query: 'division'}).then(function (response) {
+    attr: val, query: 'division'}).then(function (response) {
         console.log(response['data']);
         ReactDOM.render( <JsonTable className="table" rows = {response['data']}/> ,
           document.getElementById('container')
@@ -116,23 +130,34 @@ class App extends Component {
 
         <div align="left">
           <div>
-            Projection query: Find
-             <select id = 'proj'>
-                <option value="MenuItemID">menuItemID</option>
-                <option value="Description">Description</option>
-                <option value="Price">Price</option>
+            Projection query: Find the 
+            <select id = 'proj'>
+              <option value="MenuItemID">MenuItemID</option>
+              <option value="ItemName">ItemName</option>
+              <option value="Price">Price</option>
               </select>
-                   from table menuItems
-                   <button onClick={this.projectionQuery}>Submit</button>
+            from table MenuItem
+            <button onClick={this.projectionQuery}>Submit</button>
+          </div>
 
-          </div>
           <br/>
+
           <div>
-            Selection query: Find menuitems from table menuItems where price > <input id = 'sel' type="number" name="fname"></input> <button onClick={this.selectionQuery}>Submit</button>
+            Selection query: Find the 
+            <select id = 'sel2'>
+              <option value="MenuItemID">MenuItemID</option>
+              <option value="ItemName">ItemName</option>
+              <option value="Price">Price</option>
+              </select>
+            from table MenuItem where Price > 
+            <input id = 'sel' type="number" name="fname"></input> 
+            <button onClick={this.selectionQuery}>Submit</button>
           </div>
-            <br/>
+
+          <br/>
+
           <div>
-            Join query: Find employee IDS who work at
+            Join query: Find the EmployeeID of employees who work at
             <select id="join">
                <option value="123 Toasted Street, Vancouver BC">123 Toasted Street, Vancouver BC</option>
                <option value="67A Whole Wheat Place, Vancouver BC">67A Whole Wheat Place, Vancouver BC</option>
@@ -142,31 +167,65 @@ class App extends Component {
              </select>
              <button onClick={this.joinQuery}>Submit</button>
           </div>
-            <br/>
+
+          <br/>
+
           <div>
-            Aggregation query: Find most expensive sandwich on menu   <button onClick={this.aggregationQuery}>Submit</button>
+            Aggregation query: Find the 
+            <select id = 'aggr'>
+                <option value="MenuItemID">MenuItemID</option>
+                <option value="ItemName">ItemName</option>
+                <option value="Price">Price</option>
+            </select> of the most expensive sandwiches from the MenuItem table   
+            <button onClick={this.aggregationQuery}>Submit</button>
           </div>
-            <br/>
+
+          <br/>
+
           <div>
-            Nested Aggregation query: Find the average order total for a customer who has placed more than 2 orders <button onClick={this.groupbyQuery}>Submit</button>
+            Nested Aggregation query: Find the average Cost of orders for a customer who has placed more than 2 orders <button onClick={this.groupbyQuery}>Submit</button>
           </div>
-            <br/>
+
+          <br/>
+
           <div>
             Update query: Increase price of menu items by $<input id='update' type="number" name="fname"></input>  <button onClick={this.updateOp}>Submit</button>
           </div>
-            <br/>
+
+          <br/>
+
+          <div>
+            View Sandwich table before delete:
+            <button onClick={this.viewSandwiches}>Submit</button>
+          </div>
+
+          <br/>
+
           <div>
             Delete query: Delete sandwiches of the size
             <select id="delete">
-               <option value="H">Half</option>
-               <option value="F">Full</option>
+               <option value="H">Half (6-inch)</option>
+               <option value="F">Foot (Foot-long)</option>
            </select>
+           from Sandwich table 
             <button onClick={this.deleteOp}>Submit</button>
           </div>
-            <br/>
+
+          <br/>
+
           <div>
-            Division query: Find the customers who have ordered from all restaurant locations <button onClick={this.divisionQuery}>Submit</button>
+            Division query: Find the
+            <select id="div">
+               <option value="CustomerID">CustomerID</option>
+               <option value="Name">Name</option>
+               <option value="Email">Email</option>
+               <option value="CardNumber">CardNumber</option>
+               <option value="Address">Address</option>
+               <option value="Password">Password</option>
+           </select>
+             who have ordered from all restaurant locations <button onClick={this.divisionQuery}>Submit</button>
           </div>
+
         </div>
 
         <div id="container">

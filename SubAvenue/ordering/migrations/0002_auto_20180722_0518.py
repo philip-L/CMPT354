@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-    	migrations.RunSQL("INSERT INTO Restaurant (RestaurantID , Address ) \
+    	migrations.RunSQL("INSERT INTO Restaurant (RestaurantID, Address ) \
     		VALUES ('R100', '123 Toasted Street, Vancouver BC'), ('R101', '67A Whole Wheat Place, Vancouver BC'), \
     		('R102', '500 Mayo Drive, Burnaby BC'), ('R103', '32G Lettuce Street, Vancouver BC'), \
     		('R104', '13 Ketchup Court, Delta BC');"),
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
     		('O102', 'R102', 'C102', True, 8.75, 'N/A', '2018-06-18 12:17:17', '2018-06-18 12:38:17', 'P'), \
     		('O103', 'R103', 'C103', False, 10.50, 'Downstairs', '2018-06-20 12:17:17', '2018-06-20 12:44:17', 'D'), \
     		('O104', 'R104', 'C104', True, 5.50, 'N/A', '2018-06-21 12:17:17', '2018-06-21 12:51:17', 'P'),\
-			('O105', 'R102', 'C105', True, 1.00, 'Front door', '2018-06-22 12:17:17', '2018-06-22 12:32:17', 'D'),\
+			('O105', 'R102', 'C101', True, 1.00, 'Front door', '2018-06-22 12:17:17', '2018-06-22 12:32:17', 'D'),\
 			('O106', 'R103', 'C101', True, 5.50, 'N/A', '2018-06-22 12:17:17', '2018-06-22 12:24:17', 'P'),\
 			('O107', 'R104', 'C101', True, 8.75, 'Back door', '2018-06-23 12:17:17', '2018-06-23 12:46:17', 'D'),\
 			('O108', 'R100', 'C101', True, 4.50, 'N/A', '2018-06-24 12:17:17', '2018-06-24 12:37:17', 'P'),\
@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
     	migrations.RunSQL("INSERT INTO MenuItem (MenuItemID, ItemName, Price) VALUES \
     		('M100', '6inch Chicken Sandwich', 5.00), ('M101', 'Small Pepsi Drink', 1.00), \
     		('M102', 'Chocolate Chip Cookie', 0.80), ('M103', 'Regular Chips', 1.00), \
-    		('M104', '6inch Tuna Sandwich', 5.00),  ('M105', '6inch Turkey Sandwich', 5.00), \
+    		('M104', '6inch Tuna Sandwich', 5.00),  ('M105', '6inch Steak Sandwich', 5.00), \
     		('M106', '6inch Turkey Sandwich', 5.00), ('M107', 'Foot-long Ham and Cheese Sandwich', 8.50), \
     		('M108', 'Foot-long Egg Salad Sandwich', 8.50), ('M109', 'Large Lemonade Drink', 3.50), \
     		('M110', 'Medium IcedTea Drink', 2.00), ('M111', 'Medium Sprite Drink', 2.00), \
